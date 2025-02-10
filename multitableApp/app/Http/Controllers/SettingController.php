@@ -7,12 +7,18 @@ use Illuminate\Http\Request;
 
 class SettingController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(\App\Http\Middleware\AdminMiddleware::class);
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        $settings = Setting::all();
+        return view('settings.index', compact('settings'));
     }
 
     /**
@@ -44,7 +50,8 @@ class SettingController extends Controller
      */
     public function edit(Setting $setting)
     {
-        //
+        $setting = Setting::findOrFail($id);
+        return view('settings.edit', compact('setting'));
     }
 
     /**
@@ -52,7 +59,18 @@ class SettingController extends Controller
      */
     public function update(Request $request, Setting $setting)
     {
-        //
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'maxFiles' => 'required|integer|min:1',
+        ]);
+    
+        $setting->update([
+            'name' => $request->name,
+            'maxFiles' => $request->maxFiles,
+        ]);
+    
+        return redirect()->route('settings.index')
+            ->with('success', 'Settings updated successfully');
     }
 
     /**
@@ -60,6 +78,17 @@ class SettingController extends Controller
      */
     public function destroy(Setting $setting)
     {
-        //
+        $setting = Setting::findOrFail($id);
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'maxFiles' => 'required|integer|min:1',
+        ]);
+
+        $setting->update([
+            'name' => $request->name,
+            'maxFiles' => $request->maxFiles,
+        ]);
+
+        return redirect()->route('settings.index')->with('success', 'Configuration updated successfully.');
     }
 }

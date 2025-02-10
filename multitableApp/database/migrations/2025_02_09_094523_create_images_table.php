@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('sale_id')->constrained()->onDelete('cascade');
             $table->string('route');
+            $table->boolean('is_main')->default(false);
         });
     }
 

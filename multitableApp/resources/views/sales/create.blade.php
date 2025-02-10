@@ -1,0 +1,151 @@
+@extends('layouts.app')
+
+@section('content')
+<div class="container py-4">
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+            <div class="card shadow-lg border-0 rounded-3">
+                <div class="card-header bg-primary text-white py-3">
+                    <h4 class="card-title mb-0 text-center">
+                        <i class="fas fa-tags me-2"></i>Add New Product
+                    </h4>
+                </div>
+                
+                <div class="card-body p-4">
+                    @if ($errors->any())
+                        <div class="alert alert-danger alert-dismissible fade show">
+                            <ul class="list-unstyled mb-0">
+                                @foreach ($errors->all() as $error)
+                                    <li><i class="fas fa-exclamation-circle me-2"></i>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    @endif
+
+                    <form action="{{ route('sales.store') }}" method="POST" enctype="multipart/form-data" class="needs-validation" novalidate>
+                        @csrf
+                        
+                        <div class="row g-4">
+                            <div class="col-md-6">
+                                <div class="form-floating">
+                                    <input type="text" 
+                                           class="form-control @error('product') is-invalid @enderror" 
+                                           id="product" 
+                                           name="product" 
+                                           value="{{ old('product') }}" 
+                                           placeholder="Product name"
+                                           required>
+                                    <label for="product">Product Name</label>
+                                    @error('product')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="form-floating">
+                                    <input type="number" 
+                                           class="form-control @error('price') is-invalid @enderror" 
+                                           id="price" 
+                                           name="price" 
+                                           step="0.05" 
+                                           min="0" 
+                                           value="{{ old('price') }}" 
+                                           placeholder="Price"
+                                           required>
+                                    <label for="price">Price (€)</label>
+                                    @error('price')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="form-floating">
+                                    <select class="form-select @error('category_id') is-invalid @enderror" 
+                                            id="category_id" 
+                                            name="category_id" 
+                                            required>
+                                        <option value="">Select category</option>
+                                        @foreach($categories as $category)
+                                            <option value="{{ $category->id }}" 
+                                                {{ old('category_id') == $category->id ? 'selected' : '' }}>
+                                                {{ $category->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    <label for="category_id">Category</label>
+                                    @error('category_id')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                <div class="mb-3">
+                                    <label for="images" class="form-label">
+                                        <i class="fas fa-images me-2"></i>Product Images
+                                    </label>
+                                    <input type="file" 
+                                        class="form-control @error('images') is-invalid @enderror" 
+                                        id="images" 
+                                        name="images[]" 
+                                        multiple 
+                                        accept="image/*">
+                                    <div class="form-text">You can select up to {{ $maxFiles }} images. Supported formats: JPEG, PNG, GIF, SVG</div>
+                                    <div id="selectedFiles" class="mt-2"></div>
+                                    
+                                    <!-- Añadir selector de imagen principal -->
+                                    <div id="mainImageSelector" class="mt-3 d-none">
+                                        <label class="form-label">Select Main Image:</label>
+                                        <select class="form-select" name="main_image" id="mainImageSelect">
+                                        </select>
+                                    </div>
+
+                                    @error('images')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                <div class="form-floating mb-3">
+                                    <textarea class="form-control @error('description') is-invalid @enderror" 
+                                              id="description" 
+                                              name="description" 
+                                              style="height: 150px"
+                                              placeholder="Description"
+                                              required>{{ old('description') }}</textarea>
+                                    <label for="description">Product Description</label>
+                                    @error('description')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="d-flex gap-2 justify-content-center mt-4">
+                            <button type="submit" class="btn btn-primary btn-lg px-4">
+                                <i class="fas fa-paper-plane me-2"></i>Publish Product
+                            </button>
+                            <a href="{{ route('sales.index') }}" class="btn btn-outline-secondary btn-lg px-4">
+                                <i class="fas fa-times me-2"></i>Cancel
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@endsection
+
+@section('scripts')
+<script src="{{ asset('js/script.js') }}"></script>
+<script>
+    document.getElementById('images').addEventListener('change', function() {
+        handleImageSelection(this, {{ $maxFiles }});
+    });
+</script>
+@endsection

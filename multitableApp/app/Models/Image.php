@@ -9,7 +9,9 @@ class Image extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['sale_id', 'route'];
+    public $timestamps = false; // Deshabilita los timestamps
+
+    protected $fillable = ['sale_id', 'route', 'is_main'];
 
     public function sale()
     {

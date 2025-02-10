@@ -9,6 +9,8 @@ class Category extends Model
 {
     use HasFactory;
 
+    public $timestamps = false; // Deshabilita los timestamps
+
     protected $fillable = ['name'];
 
     public function sales()

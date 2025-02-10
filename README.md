@@ -25,9 +25,24 @@ Actualizar el .env
 
 php artisan migrate
 
-## Inicio del proyecto
+## Ejecución del proyecto
 
 Tras crear las migraciones:
 
 1. Se editan los modelos creados
-2. Se añaden las rutas
+2. Se editan los controladores
+3. Se añaden las rutas
+4. Se crean las vistas
+
+## Poblar la base de datos
+
+php artisan make:seeder NombreSeeder
+
+Se crea database/seeders/NombreSeeder.php
+
+Se especifica el seeder anterior database/seeders/DatabaseSeeder.php
+
+php artisan db:seed
+
+Establecer el almacenamiento simbólico:
+php artisan storage:link
