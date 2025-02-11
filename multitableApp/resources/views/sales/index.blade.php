@@ -76,7 +76,7 @@
         <div class="row justify-content-center mb-4">
             <div class="col-md-10">
                 <div class="d-flex justify-content-between align-items-center">
-                    <h2 class="mb-0"><i class="fas fa-store me-2"></i>Productos Disponibles</h2>
+                    <h2 class="mb-0"><i class="fas fa-store me-2"></i>Available Products</h2>
                     <div class="d-flex gap-3">
                         @if(Auth::user() != null)
                             <a href="{{ route('sales.create') }}" class="btn btn-primary">

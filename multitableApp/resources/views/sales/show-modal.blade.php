@@ -49,31 +49,31 @@
 
                     <div class="col-md-6">
                         <div class="p-3">
-                            <h4 class="text-primary mb-4">Detalles del Producto</h4>
+                            <h4 class="text-primary mb-4">Product Details</h4>
                             
                             <div class="mb-3">
-                                <label class="text-muted">Descripción:</label>
+                                <label class="text-muted">Description:</label>
                                 <p class="fw-bold">{{ $sale->description }}</p>
                             </div>
                             
                             <div class="row mb-3">
                                 <div class="col-6">
-                                    <label class="text-muted">Categoría:</label>
+                                    <label class="text-muted">category:</label>
                                     <p class="fw-bold">{{ $sale->category->name }}</p>
                                 </div>
                                 <div class="col-6">
-                                    <label class="text-muted">Precio:</label>
+                                    <label class="text-muted">Price:</label>
                                     <p class="fw-bold text-success">{{ number_format($sale->price, 2, ',', '.') }}€</p>
                                 </div>
                             </div>
                             
                             <div class="row mb-4">
                                 <div class="col-6">
-                                    <label class="text-muted">Vendedor:</label>
+                                    <label class="text-muted">Seller:</label>
                                     <p class="fw-bold">{{ $sale->user->name }}</p>
                                 </div>
                                 <div class="col-6">
-                                    <label class="text-muted">Publicado:</label>
+                                    <label class="text-muted">Published:</label>
                                     <p class="fw-bold">{{ $sale->created_at->format('d/m/Y') }}</p>
                                 </div>
                             </div>
@@ -84,7 +84,7 @@
                                     @method('PUT')
                                     <button type="submit" class="btn btn-primary btn-lg w-100"
                                         onclick="return confirm('¿Estás seguro de que quieres comprar este producto?')">
-                                        <i class="fas fa-shopping-cart me-2"></i>Comprar Ahora
+                                        <i class="fas fa-shopping-cart me-2"></i>Buy Now
                                     </button>
                                 </form>
                             @endif
